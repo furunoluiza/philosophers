@@ -1,11 +1,11 @@
 NAME = philo
 CC = cc
 RM = rm -rf
-CFLAGS = -Wall -Wextra -Werror
-DBUG = -g
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRC =	sources/main.c\
-		sources/validate_args.c
+		sources/validate_args.c\
+		sources/dinner.c
 OBJ = $(SRC:.c=.o)
 
 Reset = \033[0m
@@ -21,6 +21,15 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
+
+fsanitize: FLAGS += -fsanitize=thread
+fsanitize: fclean ${NAME}
+
+debug: FLAGS += -ggdb3
+debug: fclean ${NAME}
+
+val: re debug
+	valgrind --tool=helgrind -s ./philo 5 800 200 200 7 
 
 clean:
 	$(RM) $(OBJ)
