@@ -6,11 +6,53 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:33:12 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/03 16:06:11 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:47:06 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+t_fork *build_forks(t_dinner *dinner)
+{
+    int i;
+    t_fork  *forks;
+
+    i = 0;
+    forks = malloc(sizeof(t_fork) * dinner->philos);
+    if (!forks)
+        return (NULL);
+    while(i < dinner->philos)
+    {
+        forks[i].flag = 0;
+        pthread_mutex_init(&forks[i].lock, NULL);
+        i++;
+    }
+    return (forks);
+}
+
+t_philo *build_philos(t_dinner *dinner, t_fork *forks)
+{
+    int i;
+    t_philo *new_philo;
+
+    i = 0;
+    new_philo = malloc(sizeof(t_philo) * dinner->philos);
+    if (!new_philo)
+        return (free(forks), NULL);
+    while(i < dinner->philos)
+    {
+        new_philo[i].id = i + 1;
+        new_philo[i].philos = dinner->philos;
+        new_philo[i].die = dinner->die;
+        new_philo[i].eat = dinner->eat;
+        new_philo[i].sleep = dinner->sleep;
+        new_philo[i].num_eat = dinner->num_eat;
+        new_philo[i].right = &forks[i];
+        new_philo[i].left = &forks[(i + 1) % dinner->philos]; 
+        i++;
+    }
+    return(new_philo);
+}
 
 int    validate_dinner(t_dinner *dinner)
 {
@@ -23,14 +65,6 @@ int    validate_dinner(t_dinner *dinner)
     if (dinner->sleep < 60)
         return(printf("Time to sleep: Max = INT_MAX && MIN = 60"), 0);
     return (1);
-}
-
-void	free_dinner(t_dinner *dinner)
-{
-	if (dinner == NULL)
-		return ;
-    free(dinner);
-    dinner = NULL;
 }
 
 t_dinner   *build_dinner(char **argv)

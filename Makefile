@@ -5,7 +5,9 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRC =	sources/main.c\
 		sources/validate_args.c\
-		sources/dinner.c
+		sources/dinner.c\
+		sources/free.c
+
 OBJ = $(SRC:.c=.o)
 
 Reset = \033[0m
