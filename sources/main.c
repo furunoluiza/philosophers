@@ -6,51 +6,60 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:25:45 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/04 16:48:47 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/07 16:32:36 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-/*void    *routine(pthread_mutex_t *mutex)
+void    *routine(void *arg)
 {
-    int i = 0;
-    while(i < 2)
-    {
-        pthread_mutex_lock(&mutex);
-        i++;
-        pthread_mutex_unlock(&mutex);
-    }
+    t_philo *philo = (t_philo *)arg;
+    printf("Philo %d is thinking\n", philo->id);
+    return (NULL);
 }
 
-int    create_threads(t_dinner *dinner)
+int create_threads(t_fork *forks, t_philo *philos, int num_philos)
 {
     int i;
-    pthread_t   philos;
-    pthread_mutex_t mutex;
+    pthread_t   *threads;
 
-    i = dinner->philos;
-    philos = malloc(sizeof(pthread_t) * dinner->philos);
-    if(!philos)
-        return(NULL);
-    pthread_mutex_init(&mutex, NULL);
-    while(i > 0)
+    i = 0;
+    threads = malloc(sizeof(pthread_t) * num_philos);
+    if(!threads)
     {
-        if(pthread_create(&philo[i], NULL, routine, mutex) != 0)
+        destroy_forks(forks, num_philos);
+        free_philos(philos);
+        return (0);
+    }
+    while(i < num_philos)
+    {
+        if (pthread_create(&threads[i], NULL, routine, &philos[i]) != 0)
         {
             printf("Failed to create philo");
-            return (free(philos), 0);
+            destroy_forks(forks, num_philos);
+            free_philos(philos);
+            free(threads);
+            return (0);
         }
+        i++;
     }
     i = 0;
-    while(i > 0)
+    while(i < num_philos)
     {
-        if(pthread_join(th[i], NULL) != 0)
-            return (free(philos), 0);
+        if(pthread_join(threads[i], NULL) != 0)
+        {
+            printf("Failed to join thread");
+            destroy_forks(forks, num_philos);
+            free_philos(philos);
+            free(threads);
+            return (0);
+        }
+        i++;
     }
-    pthread_mutex_destroy(&mutex);
-    return (free(philos), 1);
-}*/
+    free(threads);
+    return (1);
+}
 
 int main(int argc, char **argv)
 {
@@ -66,8 +75,8 @@ int main(int argc, char **argv)
         return (free_dinner(dinner), 1);
     forks = build_forks(dinner);
     philos = build_philos(dinner, forks);
-    /*if (!create_threads(dinner))
-        return (free_dinner(dinner), 1);*/
+    if (!create_threads(forks, philos, dinner->philos))
+        return (free_dinner(dinner), 1);
     destroy_forks(forks, dinner->philos);
     free_philos(philos);
     free_dinner(dinner);
