@@ -6,7 +6,7 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:26:34 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/08 15:08:34 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:41:00 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,18 @@ void  free_philos(t_philo *philos)
 
 void	free_dinner(t_dinner *dinner)
 {
-	  if (dinner == NULL)
+	if (dinner == NULL)
 		  return ;
     free(dinner);
     dinner = NULL;
+}
+void    free_all(t_main *main)
+{
+    if (main == NULL)
+        return ;
+    destroy_forks(main->forks, main->dinner->philos);
+    free_philos(main->philos);
+    free_dinner(main->dinner);
+    free(main);
+    main = NULL;
 }

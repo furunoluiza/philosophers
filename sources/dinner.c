@@ -6,11 +6,24 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:33:12 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/04 16:47:06 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:59:17 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+t_main  *build_main(t_fork *forks, t_philo *philos, t_dinner *dinner)
+{
+    t_main  *new_main;
+
+    new_main = malloc(sizeof(t_main));
+    if (!new_main)
+        return (NULL);
+    new_main->forks = forks;
+    new_main->philos = philos;
+    new_main->dinner = dinner;
+    return (new_main);
+}
 
 t_fork *build_forks(t_dinner *dinner)
 {
