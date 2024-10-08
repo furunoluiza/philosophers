@@ -6,7 +6,8 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 SRC =	sources/main.c\
 		sources/validate_args.c\
 		sources/dinner.c\
-		sources/free.c
+		sources/free.c\
+		sources/time.c
 
 OBJ = $(SRC:.c=.o)
 

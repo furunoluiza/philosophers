@@ -6,17 +6,20 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:51:09 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/04 16:48:00 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:03:22 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <stdint.h>
+
 
 typedef struct  s_fork
 {
@@ -57,8 +60,13 @@ int    validate_dinner(t_dinner *dinner);
 t_dinner   *build_dinner(char **argv);
 
 /* ---free--- */
+void free_threads(pthread_t *threads, t_fork *forks, t_philo *philos, int num_philos);
 void  destroy_forks(t_fork *forks, int num_forks);
 void  free_philos(t_philo *philos);
 void	free_dinner(t_dinner *dinner);
+
+/* ---time--- */
+long    get_time(void);
+void    my_sleep(long time);
 
 #endif
