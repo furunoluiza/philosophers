@@ -89,11 +89,6 @@ static int val_number(int argc, char **argv)
 
 int validate_args(int argc, char **argv)
 {
-    int i;
-    int j;
-    
-    i = 1;
-    j = 0;
     if (argc < 5 || argc > 6)
     {
         printf("Error: Invalid number of arguments");

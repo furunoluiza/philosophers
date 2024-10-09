@@ -20,7 +20,6 @@
 # include <sys/time.h>
 # include <stdint.h>
 
-
 typedef struct  s_fork
 {
     int flag;
@@ -38,6 +37,8 @@ typedef struct  s_philo
     t_fork  *right;
     t_fork  *left;
 }   t_philo;
+//guardar as info de quantas vezes ele comeu e a ultima hora que ele comeu
+//flag pra saber se o philo ta satisfeito
 
 typedef struct  s_dinner
 {
@@ -48,6 +49,7 @@ typedef struct  s_dinner
     int         num_eat;
 }   t_dinner;
 
+//adicionar a info de se todos estão vivos e se todos estão satisfeitos
 typedef struct  t_main
 {
     t_fork      *forks;

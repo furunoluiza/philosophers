@@ -16,6 +16,9 @@ void    *arbitrator_routine(void *arg)
 {
     t_philo *philos = (t_philo *)arg;
     printf("arbitrator criado %d\n", philos[1].sleep);
+    //loop que vai entrar em cada filosofo do array, checar se ele morreu ou não 
+    //se o tempo que ele comeu pela ultima vez for maior que o tempo que ele tem pra comer
+    //se um morrer(se não todos tem garfos disponivel) -> muda a flag(mutex) ou se todos estão satisfeitos -> num_eat -> finaliza o programa
     return (NULL);
 }
 int    take_fork(t_philo *philo)
@@ -32,6 +35,7 @@ int    take_fork(t_philo *philo)
         return (1);
     return (0);
 }
+//função para desbloquear o garfo depois de comer
 
 void    *routine(void *arg)
 {
@@ -39,9 +43,12 @@ void    *routine(void *arg)
 
     if (philo->id % 2 != 0)
         usleep(500);
-    while (!take_fork(philo))
+    while ()//enquanto todos estão vivos ou se não está satisfeito
     {
-        usleep(500);
+        take_fork(philo); //transformar na função de comer (pegar os garfos, comer, guardar o tempo da ultima vez que ele comeu, aumenta a quantidade de vezes que ele comeu)
+        //comer
+        //dormir -> status e my_sleep (microsec)
+        //pensar -> print do pensamento -> preso no lock de comer
     }
     printf("Philo %d is eating\n", philo->id);
     return (NULL);

@@ -28,9 +28,6 @@ void  destroy_forks(t_fork *forks, int num_forks)
 
 void  free_philos(t_philo *philos)
 {
-    int i;
-
-    i = 0;
     if (philos == NULL)
       return ;
     free(philos);
