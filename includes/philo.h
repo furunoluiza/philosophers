@@ -34,8 +34,12 @@ typedef struct  s_philo
     int eat;
     int sleep;
     int num_eat;
+    int meals;
+    int satisfied;
+    long    last_meal_tv;
     t_fork  *right;
     t_fork  *left;
+    t_main  *main;
 }   t_philo;
 //guardar as info de quantas vezes ele comeu e a ultima hora que ele comeu
 //flag pra saber se o philo ta satisfeito
@@ -52,10 +56,15 @@ typedef struct  s_dinner
 //adicionar a info de se todos estão vivos e se todos estão satisfeitos
 typedef struct  t_main
 {
+    int         all_alive;
+    int         all_satisfied;
     t_fork      *forks;
     t_philo     *philos;
-    t_dinner    *dinner;
+    t_dinner    *dinner; 
     long        start_time;
+    pthread_t   *arbitrator;
+    pthread_mutex_t alive_lock;
+    pthread_mutex_t satisfied_lock;
 }   t_main;
 
 /* ---validate_args--- */
@@ -79,5 +88,15 @@ void    free_all(t_main *main);
 /* ---time--- */
 long    get_time(void);
 void    my_sleep(long time);
+
+/* ---threads--- */
+int create_arbitrator(t_main *main);
+int join_arbitrator(t_main *main);
+int create_threads(t_main *main);
+
+/* ---routine--- */
+
+/* ---arbitrator--- */
+void    *arbitrator_routine(void *arg);
 
 #endif

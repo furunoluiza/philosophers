@@ -7,7 +7,10 @@ SRC =	sources/main.c\
 		sources/validate_args.c\
 		sources/dinner.c\
 		sources/free.c\
-		sources/time.c
+		sources/time.c\
+		sources/threads.c\
+		sources/routine.c\
+		sources/arbitrator.c
 
 OBJ = $(SRC:.c=.o)
 

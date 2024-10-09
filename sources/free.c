@@ -48,6 +48,8 @@ void    free_all(t_main *main)
     destroy_forks(main->forks, main->dinner->philos);
     free_philos(main->philos);
     free_dinner(main->dinner);
+    pthread_mutex_destroy(&main->satisfied_lock);
+    pthread_mutex_destroy(&main->all_alive);
     free(main);
     main = NULL;
 }
