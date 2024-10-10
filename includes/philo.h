@@ -20,6 +20,8 @@
 # include <sys/time.h>
 # include <stdint.h>
 
+typedef struct t_main t_main;
+
 typedef struct  s_fork
 {
     int flag;
@@ -95,6 +97,11 @@ int join_arbitrator(t_main *main);
 int create_threads(t_main *main);
 
 /* ---routine--- */
+int     take_fork(t_philo *philo);
+int     return_fork(t_philo *philo);
+void    print_message(long time, int id, int message);
+int     ft_eat(t_philo *philo);
+void    *routine(void *arg);
 
 /* ---arbitrator--- */
 void    *arbitrator_routine(void *arg);

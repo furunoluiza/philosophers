@@ -28,7 +28,8 @@ int join_arbitrator(t_main *main)
 {
     if(pthread_join(*main->arbitrator, NULL) != 0)
             return (printf("Failed to join arbitrator"), 0);
-    free(arbitrator);
+    free(main->arbitrator);
+    return (1);
 }
 
 int create_threads(t_main *main)
@@ -44,6 +45,7 @@ int create_threads(t_main *main)
     create_arbitrator(main);
     while(i < main->dinner->philos)
     {
+        main->philos[i].main = main;
         if (pthread_create(&threads[i], NULL, routine, &main->philos[i]) != 0)
             return (printf("Failed to create philo"), 0);
         i++;
@@ -55,7 +57,7 @@ int create_threads(t_main *main)
             return (printf("Failed to join philo"), 0);
         i++;
     }
-    join_arbitrator(arbitrator);
+    join_arbitrator(main);
     free(threads);
     return (1);
 }

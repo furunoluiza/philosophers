@@ -49,7 +49,7 @@ void    free_all(t_main *main)
     free_philos(main->philos);
     free_dinner(main->dinner);
     pthread_mutex_destroy(&main->satisfied_lock);
-    pthread_mutex_destroy(&main->all_alive);
+    pthread_mutex_destroy(&main->alive_lock);
     free(main);
     main = NULL;
 }

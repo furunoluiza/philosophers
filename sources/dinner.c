@@ -23,10 +23,9 @@ t_main  *build_main(t_fork *forks, t_philo *philos, t_dinner *dinner)
     new_main->philos = philos;
     new_main->dinner = dinner;
     new_main->all_satisfied = 0;
-    pthread_mutex_init(&main->satisfied_lock, NULL);
+    pthread_mutex_init(&new_main->satisfied_lock, NULL);
     new_main->all_alive = 0;
-    pthread_mutex_init(&main->alive_lock, NULL);
-    philo->main = new_main;
+    pthread_mutex_init(&new_main->alive_lock, NULL);
     return (new_main);
 }
 
