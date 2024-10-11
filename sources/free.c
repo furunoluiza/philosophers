@@ -25,11 +25,10 @@ void  destroy_forks(t_fork *forks, int num_forks)
     free(forks);
     forks = NULL;
 }
-
 void  free_philos(t_philo *philos)
 {
     if (philos == NULL)
-      return ;
+        return;
     free(philos);
     philos = NULL;
 }
@@ -50,6 +49,8 @@ void    free_all(t_main *main)
     free_dinner(main->dinner);
     pthread_mutex_destroy(&main->satisfied_lock);
     pthread_mutex_destroy(&main->alive_lock);
+    pthread_mutex_destroy(&main->message_lock);
+    pthread_mutex_destroy(&main->meals_lock);
     free(main);
     main = NULL;
 }

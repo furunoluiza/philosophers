@@ -10,7 +10,9 @@ SRC =	sources/main.c\
 		sources/time.c\
 		sources/threads.c\
 		sources/routine.c\
-		sources/arbitrator.c
+		sources/arbitrator.c\
+		sources/utils.c\
+		sources/sleep_think.c
 
 OBJ = $(SRC:.c=.o)
 

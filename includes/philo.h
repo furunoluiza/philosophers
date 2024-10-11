@@ -60,13 +60,17 @@ typedef struct  t_main
 {
     int         all_alive;
     int         all_satisfied;
+    int         message_flag;
+    int         meals_flag;
     t_fork      *forks;
     t_philo     *philos;
     t_dinner    *dinner; 
     long        start_time;
     pthread_t   *arbitrator;
+    pthread_mutex_t message_lock;
     pthread_mutex_t alive_lock;
     pthread_mutex_t satisfied_lock;
+    pthread_mutex_t meals_lock;
 }   t_main;
 
 /* ---validate_args--- */
@@ -99,11 +103,19 @@ int create_threads(t_main *main);
 /* ---routine--- */
 int     take_fork(t_philo *philo);
 int     return_fork(t_philo *philo);
-void    print_message(long time, int id, int message);
 int     ft_eat(t_philo *philo);
 void    *routine(void *arg);
 
 /* ---arbitrator--- */
 void    *arbitrator_routine(void *arg);
+
+/* ---utils--- */
+int    mutex_lock(int  flag, pthread_mutex_t lock);
+int return_lock(int  flag, pthread_mutex_t lock);
+void    print_message(long time, int id, int message, t_main *main);
+
+/* ---sleep_think--- */
+void ft_sleep(t_philo *philo);
+void ft_think(t_philo *philo);
 
 #endif
