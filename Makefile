@@ -12,7 +12,8 @@ SRC =	sources/main.c\
 		sources/routine.c\
 		sources/arbitrator.c\
 		sources/utils.c\
-		sources/sleep_think.c
+		sources/sleep_think.c\
+		sources/fork.c
 
 OBJ = $(SRC:.c=.o)
 

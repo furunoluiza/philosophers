@@ -35,9 +35,9 @@ int return_lock(int  flag, pthread_mutex_t lock)
 
 void    print_message(long time, int id, int message, t_main *main)
 {
+    mutex_lock(main->message_flag, main->message_lock);
     if (main->message_flag == 0)
     {
-        mutex_lock(main->message_flag, main->message_lock);
         if (message == 1)
             printf("%ld %d has taken a fork\n", time, id);
         if (message == 2)
@@ -48,6 +48,6 @@ void    print_message(long time, int id, int message, t_main *main)
             printf("%ld %d is thinking\n", time, id);
         if (message == 5)
             printf("%ld %d died\n", time, id);
-        return_lock(main->message_flag, main->message_lock);
     }
+    return_lock(main->message_flag, main->message_lock);
 }

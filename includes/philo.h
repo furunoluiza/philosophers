@@ -101,6 +101,7 @@ int join_arbitrator(t_main *main);
 int create_threads(t_main *main);
 
 /* ---routine--- */
+long    diff_time(t_philo *philo);
 int     take_fork(t_philo *philo);
 int     return_fork(t_philo *philo);
 int     ft_eat(t_philo *philo);
@@ -117,5 +118,9 @@ void    print_message(long time, int id, int message, t_main *main);
 /* ---sleep_think--- */
 void ft_sleep(t_philo *philo);
 void ft_think(t_philo *philo);
+
+/* ---fork--- */
+int take_right_fork(t_philo *philo);
+int take_left_fork(t_philo *philo);
 
 #endif
