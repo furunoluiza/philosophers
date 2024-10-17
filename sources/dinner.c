@@ -22,14 +22,14 @@ t_main  *build_main(t_fork *forks, t_philo *philos, t_dinner *dinner)
     new_main->forks = forks;
     new_main->philos = philos;
     new_main->dinner = dinner;
-    new_main->all_satisfied = 0;
-    pthread_mutex_init(&new_main->satisfied_lock, NULL);
+    new_main->all_not_satisfied = 0;
+    pthread_mutex_init(&new_main->notsatisfied_lock, NULL);
     new_main->all_alive = 0;
     pthread_mutex_init(&new_main->alive_lock, NULL);
     new_main->message_flag = 0;
     pthread_mutex_init(&new_main->message_lock, NULL);
-    new_main->meals_flag = 0;
-    pthread_mutex_init(&new_main->meals_lock, NULL);
+    //new_main->meals_flag = 0;
+    //pthread_mutex_init(&new_main->meals_lock, NULL);
     return (new_main);
 }
 

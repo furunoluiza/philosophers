@@ -59,9 +59,9 @@ typedef struct  s_dinner
 typedef struct  t_main
 {
     int         all_alive;
-    int         all_satisfied;
+    int         all_not_satisfied;
     int         message_flag;
-    int         meals_flag;
+    //int         meals_flag;
     t_fork      *forks;
     t_philo     *philos;
     t_dinner    *dinner; 
@@ -69,8 +69,8 @@ typedef struct  t_main
     pthread_t   *arbitrator;
     pthread_mutex_t message_lock;
     pthread_mutex_t alive_lock;
-    pthread_mutex_t satisfied_lock;
-    pthread_mutex_t meals_lock;
+    pthread_mutex_t notsatisfied_lock;
+    //pthread_mutex_t meals_lock;
 }   t_main;
 
 /* ---validate_args--- */
