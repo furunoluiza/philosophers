@@ -18,7 +18,7 @@ long    diff_time(t_philo *philo)
     if (philo->meals <= 0)
         diff = get_time() - philo->main->start_time;
     else
-        diff = get_time() - philo->last_meal_tv;
+        diff = get_time() - philo->last_meal_tv; //mutex
     return (diff);
 }
 int return_fork(t_philo *philo)

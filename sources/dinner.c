@@ -28,8 +28,6 @@ t_main  *build_main(t_fork *forks, t_philo *philos, t_dinner *dinner)
     pthread_mutex_init(&new_main->alive_lock, NULL);
     new_main->message_flag = 0;
     pthread_mutex_init(&new_main->message_lock, NULL);
-    //new_main->meals_flag = 0;
-    //pthread_mutex_init(&new_main->meals_lock, NULL);
     return (new_main);
 }
 
@@ -69,7 +67,6 @@ t_philo *build_philos(t_dinner *dinner, t_fork *forks)
         new_philo[i].sleep = dinner->sleep;
         new_philo[i].num_eat = dinner->num_eat;
         new_philo[i].meals = 0;
-        new_philo[i].satisfied = 0;
         new_philo[i].right = &forks[i];
         new_philo[i].left = &forks[(i + 1) % dinner->philos];
         new_philo[i].main = NULL;

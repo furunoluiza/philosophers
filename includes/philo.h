@@ -37,14 +37,11 @@ typedef struct  s_philo
     int sleep;
     int num_eat;
     int meals;
-    int satisfied;
     long    last_meal_tv;
     t_fork  *right;
     t_fork  *left;
     t_main  *main;
 }   t_philo;
-//guardar as info de quantas vezes ele comeu e a ultima hora que ele comeu
-//flag pra saber se o philo ta satisfeito
 
 typedef struct  s_dinner
 {
@@ -55,13 +52,11 @@ typedef struct  s_dinner
     int         num_eat;
 }   t_dinner;
 
-//adicionar a info de se todos estão vivos e se todos estão satisfeitos
 typedef struct  t_main
 {
     int         all_alive;
     int         all_not_satisfied;
     int         message_flag;
-    //int         meals_flag;
     t_fork      *forks;
     t_philo     *philos;
     t_dinner    *dinner; 
@@ -70,7 +65,6 @@ typedef struct  t_main
     pthread_mutex_t message_lock;
     pthread_mutex_t alive_lock;
     pthread_mutex_t notsatisfied_lock;
-    //pthread_mutex_t meals_lock;
 }   t_main;
 
 /* ---validate_args--- */
