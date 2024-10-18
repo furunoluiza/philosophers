@@ -12,15 +12,16 @@
 
 #include "../includes/philo.h"
 
-long    diff_time(t_philo *philo)
+long    get_last_meal_time(t_philo *philo)
 {
-    long    diff;
-    if (philo->meals <= 0)
-        diff = get_time() - philo->main->start_time;
-    else
-        diff = get_time() - philo->last_meal_tv; //mutex
-    return (diff);
+    long    last_meal;
+
+    pthread_mutex_lock(&philo->last_meal_lock);
+    last_meal = philo->last_meal_tv;
+    pthread_mutex_unlock(&philo->last_meal_lock);
+    return (last_meal);
 }
+
 int return_fork(t_philo *philo)
 {
     pthread_mutex_lock(&philo->right->lock);
@@ -35,6 +36,7 @@ int return_fork(t_philo *philo)
         return (0);
     return (1);
 }
+
 int    take_fork(t_philo *philo)
 {
     int took;
@@ -59,7 +61,9 @@ int ft_eat(t_philo *philo)
 {
     if (!take_fork(philo))
     {
+        pthread_mutex_lock(&philo->last_meal_lock);
         philo->last_meal_tv = get_time();
+        pthread_mutex_unlock(&philo->last_meal_lock);
         philo->meals += 1;
         my_sleep(philo->eat);
         return_fork(philo);
@@ -74,9 +78,19 @@ void    *routine(void *arg)
 
     if (philo->id % 2 != 0)
         usleep(100);
-    while ((philo->num_eat == -1 || philo->num_eat > philo->meals) && 
-            philo->main->all_alive == 0 && philo->main->all_not_satisfied == 0)//enquanto todos estão vivos ou se não está satisfeito
+    while (42)
     {
+        pthread_mutex_lock(&philo->main->alive_lock);
+        pthread_mutex_lock(&philo->main->notsatisfied_lock);
+        if ((philo->num_eat != -1 && philo->num_eat >= philo->meals) || 
+            philo->main->all_alive == 1 || philo->main->all_not_satisfied == 1) //enquanto todos estão vivos ou se não está satisfeito
+        {
+            pthread_mutex_unlock(&philo->main->notsatisfied_lock);
+            pthread_mutex_unlock(&philo->main->alive_lock);
+            break ;
+        }
+        pthread_mutex_unlock(&philo->main->notsatisfied_lock);
+        pthread_mutex_unlock(&philo->main->alive_lock);
         ft_eat(philo);
         ft_sleep(philo);
         ft_think(philo);

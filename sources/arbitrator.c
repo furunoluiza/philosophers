@@ -29,11 +29,19 @@ void    *arbitrator_routine(void *arg)
 
     i = 0;
     philos = (t_philo *)arg;
-    while (philos->main->all_alive == 0)
+    while (42)
     {
+        pthread_mutex_lock(&philos->main->alive_lock);
+        if (philos->main->all_alive == 1)
+        {
+            pthread_mutex_unlock(&philos->main->alive_lock);
+            break;
+        }
+        pthread_mutex_unlock(&philos->main->alive_lock);
+        i = 0;
         while(i < philos->philos)
         {
-            if ((philos[i].last_meal_tv + philos[i].eat) > philos[i].die) //get last_meal time -> da um mutex nessa variavel
+            if ((get_last_meal_time(philos) + philos[i].eat) > philos[i].die) //get last_meal time -> da um mutex nessa variavel
             {
                 pthread_mutex_lock(&philos->main->alive_lock);
                 philos->main->all_alive = 1;

@@ -50,7 +50,6 @@ void    free_all(t_main *main)
     pthread_mutex_destroy(&main->notsatisfied_lock);
     pthread_mutex_destroy(&main->alive_lock);
     pthread_mutex_destroy(&main->message_lock);
-    //pthread_mutex_destroy(&main->meals_lock);
     free(main);
     main = NULL;
 }

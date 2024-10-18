@@ -41,6 +41,7 @@ typedef struct  s_philo
     t_fork  *right;
     t_fork  *left;
     t_main  *main;
+    pthread_mutex_t last_meal_lock;
 }   t_philo;
 
 typedef struct  s_dinner
@@ -95,7 +96,7 @@ int join_arbitrator(t_main *main);
 int create_threads(t_main *main);
 
 /* ---routine--- */
-long    diff_time(t_philo *philo);
+long    get_last_meal_time(t_philo *philo);
 int     take_fork(t_philo *philo);
 int     return_fork(t_philo *philo);
 int     ft_eat(t_philo *philo);
@@ -105,6 +106,7 @@ void    *routine(void *arg);
 void    *arbitrator_routine(void *arg);
 
 /* ---utils--- */
+long    diff_time(t_philo *philo);
 int    mutex_lock(int  flag, pthread_mutex_t lock);
 int return_lock(int  flag, pthread_mutex_t lock);
 void    print_message(long time, int id, int message, t_main *main);
