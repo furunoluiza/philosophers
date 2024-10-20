@@ -41,7 +41,7 @@ void    *arbitrator_routine(void *arg)
         i = 0;
         while(i < philos->philos)
         {
-            if ((get_last_meal_time(philos) + philos[i].eat) > philos[i].die) //get last_meal time -> da um mutex nessa variavel
+            if ((diff_time(philos) + philos[i].eat) >= philos[i].die)
             {
                 pthread_mutex_lock(&philos->main->alive_lock);
                 philos->main->all_alive = 1;

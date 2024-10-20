@@ -74,15 +74,16 @@ int ft_eat(t_philo *philo)
 
 void    *routine(void *arg)
 {
-    t_philo *philo = (t_philo *)arg;
+    t_philo *philo;
 
+    philo = (t_philo *)arg;
     if (philo->id % 2 != 0)
-        usleep(100);
+        usleep(200);
     while (42)
     {
         pthread_mutex_lock(&philo->main->alive_lock);
         pthread_mutex_lock(&philo->main->notsatisfied_lock);
-        if ((philo->num_eat != -1 && philo->num_eat >= philo->meals) || 
+        if ((philo->num_eat != -1 && philo->num_eat <= philo->meals) || 
             philo->main->all_alive == 1 || philo->main->all_not_satisfied == 1) //enquanto todos estão vivos ou se não está satisfeito
         {
             pthread_mutex_unlock(&philo->main->notsatisfied_lock);
@@ -94,6 +95,7 @@ void    *routine(void *arg)
         ft_eat(philo);
         ft_sleep(philo);
         ft_think(philo);
+        printf("stuck\n");
     }
     return (NULL);
 }
