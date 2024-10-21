@@ -42,6 +42,9 @@ int    take_fork(t_philo *philo)
     if (took == 2)
     {
         print_message(philo, philo->id, 2, philo->main);
+        pthread_mutex_lock(&philo->live_lock);
+        philo->live_tv = get_time() + philo->die;
+        pthread_mutex_unlock(&philo->live_lock);
         return (0);
     }
     return (1);
@@ -54,34 +57,30 @@ int ft_eat(t_philo *philo)
         philo->meals += 1;
         my_sleep(philo->eat);
         return_fork(philo);
+        return (0);
     }
-    return (0);
+    return (1);
 }
+
 
 void    *routine(void *arg)
 {
     t_philo *philo;
 
     philo = (t_philo *)arg;
+    pthread_mutex_lock(&philo->live_lock);
+    philo->live_tv = philo->main->start_time + philo->die;
+    pthread_mutex_unlock(&philo->live_lock);
     if (philo->id % 2 != 0)
         usleep(200);
-    while (42)
+    while ((philo->num_eat == -1 || philo->num_eat > philo->meals) && 
+            philo_alive(philo) == 1 && philo_satisfied(philo) == 1)
     {
-        pthread_mutex_lock(&philo->main->alive_lock);
-        pthread_mutex_lock(&philo->main->notsatisfied_lock);
-        if ((philo->num_eat != -1 && philo->num_eat <= philo->meals) || 
-            philo->main->all_alive == 1 || philo->main->all_not_satisfied == 1) //enquanto todos estão vivos ou se não está satisfeito
+        if (ft_eat(philo) == 0)
         {
-            pthread_mutex_unlock(&philo->main->notsatisfied_lock);
-            pthread_mutex_unlock(&philo->main->alive_lock);
-            break ;
+            ft_sleep(philo);
+            ft_think(philo);
         }
-        pthread_mutex_unlock(&philo->main->notsatisfied_lock);
-        pthread_mutex_unlock(&philo->main->alive_lock);
-        ft_eat(philo);
-        ft_sleep(philo);
-        ft_think(philo);
-        printf("stuck\n");
     }
     return (NULL);
 }

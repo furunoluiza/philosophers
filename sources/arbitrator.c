@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-void    *arbitrator_routine(void *arg)
+/*void    *arbitrator_routine(void *arg)
 {
     t_philo *philos = (t_philo *)arg;
     printf("arbitrator criado %d\n", philos[1].sleep);
@@ -20,15 +20,40 @@ void    *arbitrator_routine(void *arg)
     //se o tempo que ele comeu pela ultima vez for maior que o tempo que ele tem pra comer
     //se um morrer(se não todos tem garfos disponivel) -> muda a flag(mutex) ou se todos estão satisfeitos -> num_eat -> finaliza o programa
     return (NULL);
+}*/
+
+int philo_alive(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->main->alive_lock);
+    if (philo->main->all_alive == 1)
+    {
+        pthread_mutex_unlock(&philo->main->alive_lock);
+        return (0);
+    }
+    pthread_mutex_unlock(&philo->main->alive_lock);
+    return (1);
 }
 
-/*void    *arbitrator_routine(void *arg)
+int philo_satisfied(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->main->notsatisfied_lock);
+    if (philo->main->all_not_satisfied == 1)
+    {
+        pthread_mutex_unlock(&philo->main->notsatisfied_lock);
+        return (0);
+    }
+    pthread_mutex_unlock(&philo->main->notsatisfied_lock);
+    return (1);
+}
+
+void    *arbitrator_routine(void *arg)
 {
     int i;
     t_philo *philos;
 
     i = 0;
     philos = (t_philo *)arg;
+    usleep(200);
     while (42)
     {
         pthread_mutex_lock(&philos->main->alive_lock);
@@ -41,16 +66,19 @@ void    *arbitrator_routine(void *arg)
         i = 0;
         while(i < philos->philos)
         {
-            if ((diff_time(philos) + philos[i].eat) >= philos[i].die)
+            pthread_mutex_lock(&philos[i].live_lock);
+            if (philos[i].live_tv <= get_time())
             {
+                pthread_mutex_unlock(&philos[i].live_lock);
                 pthread_mutex_lock(&philos->main->alive_lock);
                 philos->main->all_alive = 1;
                 pthread_mutex_unlock(&philos->main->alive_lock);
-                print_message(diff_time(&philos[i]), philos[i].id, 5, philos->main);
-                return (NULL);
+                print_message(philos, philos[i].id, 5, philos->main);
+                break ;
             }
+            pthread_mutex_unlock(&philos[i].live_lock);
             i++;
         }
     }
     return (NULL);
-}*/
+}

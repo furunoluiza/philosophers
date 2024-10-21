@@ -37,9 +37,11 @@ typedef struct  s_philo
     int sleep;
     int num_eat;
     int meals;
+    long    live_tv;
     t_fork  *right;
     t_fork  *left;
     t_main  *main;
+    pthread_mutex_t live_lock;
 }   t_philo;
 
 typedef struct  s_dinner
@@ -101,6 +103,8 @@ int     ft_eat(t_philo *philo);
 void    *routine(void *arg);
 
 /* ---arbitrator--- */
+int philo_alive(t_philo *philo);
+int philo_satisfied(t_philo *philo);
 void    *arbitrator_routine(void *arg);
 
 /* ---utils--- */
