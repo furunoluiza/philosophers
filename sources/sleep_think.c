@@ -14,17 +14,11 @@
 
 void ft_sleep(t_philo *philo)
 {
-    long diff;
-
-    diff = get_time() - get_last_meal_time(philo);
-    print_message(diff, philo->id, 3, philo->main);
+    print_message(philo, philo->id, 3, philo->main);
     my_sleep(philo->sleep);
 }
 
 void ft_think(t_philo *philo)
 {
-    long diff;
-
-    diff = get_time() - get_last_meal_time(philo);
-    print_message(diff, philo->id, 4, philo->main);
+    print_message(philo, philo->id, 4, philo->main);
 }

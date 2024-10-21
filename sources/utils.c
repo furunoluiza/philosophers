@@ -12,16 +12,6 @@
 
 #include "../includes/philo.h"
 
-long    diff_time(t_philo *philo)
-{
-    long    diff;
-    if (philo->meals <= 0)
-        diff = get_time() - philo->main->start_time;
-    else
-        diff = get_time() - get_last_meal_time(philo); //mutex
-    return (diff);
-}
-
 int    mutex_lock(int  flag, pthread_mutex_t lock)
 {
     pthread_mutex_lock(&lock);
@@ -43,8 +33,11 @@ int return_lock(int  flag, pthread_mutex_t lock)
     return (0);
 }
 
-void    print_message(long time, int id, int message, t_main *main)
+void    print_message(t_philo *philo, int id, int message, t_main *main)
 {
+    long    time;
+
+    time = get_time() - philo->main->start_time;
     mutex_lock(main->message_flag, main->message_lock);
     if (main->message_flag == 0)
     {

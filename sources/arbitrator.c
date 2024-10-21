@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-/*void    *arbitrator_routine(void *arg)
+void    *arbitrator_routine(void *arg)
 {
     t_philo *philos = (t_philo *)arg;
     printf("arbitrator criado %d\n", philos[1].sleep);
@@ -20,9 +20,9 @@
     //se o tempo que ele comeu pela ultima vez for maior que o tempo que ele tem pra comer
     //se um morrer(se não todos tem garfos disponivel) -> muda a flag(mutex) ou se todos estão satisfeitos -> num_eat -> finaliza o programa
     return (NULL);
-}*/
+}
 
-void    *arbitrator_routine(void *arg)
+/*void    *arbitrator_routine(void *arg)
 {
     int i;
     t_philo *philos;
@@ -53,4 +53,4 @@ void    *arbitrator_routine(void *arg)
         }
     }
     return (NULL);
-}
+}*/

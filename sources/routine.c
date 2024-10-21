@@ -12,16 +12,6 @@
 
 #include "../includes/philo.h"
 
-long    get_last_meal_time(t_philo *philo)
-{
-    long    last_meal;
-
-    pthread_mutex_lock(&philo->last_meal_lock);
-    last_meal = philo->last_meal_tv;
-    pthread_mutex_unlock(&philo->last_meal_lock);
-    return (last_meal);
-}
-
 int return_fork(t_philo *philo)
 {
     pthread_mutex_lock(&philo->right->lock);
@@ -51,7 +41,7 @@ int    take_fork(t_philo *philo)
     }
     if (took == 2)
     {
-        print_message(diff_time(philo), philo->id, 2, philo->main);
+        print_message(philo, philo->id, 2, philo->main);
         return (0);
     }
     return (1);
@@ -61,16 +51,12 @@ int ft_eat(t_philo *philo)
 {
     if (!take_fork(philo))
     {
-        pthread_mutex_lock(&philo->last_meal_lock);
-        philo->last_meal_tv = get_time();
-        pthread_mutex_unlock(&philo->last_meal_lock);
         philo->meals += 1;
         my_sleep(philo->eat);
         return_fork(philo);
     }
     return (0);
 }
-//encerrar a rotina do filosofo quando ele não poder mais comer
 
 void    *routine(void *arg)
 {

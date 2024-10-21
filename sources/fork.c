@@ -21,7 +21,7 @@ int take_right_fork(t_philo *philo)
     if (philo->right->flag == 0)
     {
         philo->right->flag = 1;
-        print_message(diff_time(philo), philo->id, 1, philo->main);
+        print_message(philo, philo->id, 1, philo->main);
         took = 1;
     }
     pthread_mutex_unlock(&philo->right->lock);
@@ -37,7 +37,7 @@ int take_left_fork(t_philo *philo)
     if (philo->left->flag == 0)
     {
         philo->left->flag = 1;
-        print_message(diff_time(philo), philo->id, 1, philo->main);
+        print_message(philo, philo->id, 1, philo->main);
         took = 2;
     }
     pthread_mutex_unlock(&philo->left->lock);
