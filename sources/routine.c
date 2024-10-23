@@ -22,8 +22,8 @@ int return_fork(t_philo *philo)
     if (philo->left->flag == 1)
         philo->left->flag = 0;
     pthread_mutex_unlock(&philo->left->lock);
-    if(philo->right->flag == 0 && philo->left->flag == 0)
-        return (0);
+    //if(philo->right->flag == 0 && philo->left->flag == 0)
+     //   return (0);
     return (1);
 }
 
@@ -85,7 +85,7 @@ void    *routine(void *arg)
     philo->live_tv = philo->main->start_time + philo->die;
     pthread_mutex_unlock(&philo->live_lock);
     if (philo->id % 2 != 0)
-        usleep(200);
+        my_sleep(200);
     while (can_eat(philo) && philo_alive(philo) == 1 && philo_satisfied(philo) == 1)
     {
         if (ft_eat(philo) == 0)

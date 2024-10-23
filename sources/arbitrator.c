@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-/*void    *arbitrator_routine(void *arg)
+/* void    *arbitrator_routine(void *arg)
 {
     t_philo *philos = (t_philo *)arg;
     printf("arbitrator criado %d\n", philos[1].sleep);
@@ -20,7 +20,7 @@
     //se o tempo que ele comeu pela ultima vez for maior que o tempo que ele tem pra comer
     //se um morrer(se não todos tem garfos disponivel) -> muda a flag(mutex) ou se todos estão satisfeitos -> num_eat -> finaliza o programa
     return (NULL);
-}*/
+} */
 
 int philo_alive(t_philo *philo)
 {
@@ -30,7 +30,7 @@ int philo_alive(t_philo *philo)
         pthread_mutex_unlock(&philo->main->alive_lock);
         return (0);
     }
-    pthread_mutex_unlock(&philo->main->alive_lock);
+        pthread_mutex_unlock(&philo->main->alive_lock);
     return (1);
 }
 
@@ -45,6 +45,7 @@ int philo_satisfied(t_philo *philo)
     pthread_mutex_unlock(&philo->main->notsatisfied_lock);
     return (1);
 }
+
 int num_meals(t_philo *philo)
 {
     int i;
@@ -72,21 +73,23 @@ void    *arbitrator_routine(void *arg)
 
     i = 0;
     philos = (t_philo *)arg;
-    usleep(200);
+    my_sleep(200);
     while (42)
     {
-        pthread_mutex_lock(&philos->main->alive_lock);
-        if (philos->main->all_alive == 1)
+        /* if (philo_alive(philos) == 0 || philo_satisfied(philos) == 0)
+            break ; //arrumar  */
+        if (num_meals(philos) == 1)
         {
-            pthread_mutex_unlock(&philos->main->alive_lock);
+            pthread_mutex_lock(&philos->main->notsatisfied_lock);
+            philos->main->all_not_satisfied = 1;
+            pthread_mutex_unlock(&philos->main->notsatisfied_lock);
             break;
         }
-        pthread_mutex_unlock(&philos->main->alive_lock);
         i = 0;
         while(i < philos->philos)
         {
             pthread_mutex_lock(&philos[i].live_lock);
-            if (philos[i].live_tv <= get_time() || num_meals(philos) == 1)
+            if (philos[i].live_tv <= get_time())
             {
                 pthread_mutex_unlock(&philos[i].live_lock);
                 pthread_mutex_lock(&philos->main->alive_lock);

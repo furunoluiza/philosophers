@@ -52,7 +52,6 @@ void    print_message(t_philo *philo, int id, int message, t_main *main)
                 printf("%ld %d is sleeping\n", time, id);
             if (message == 4)
                 printf("%ld %d is thinking\n", time, id);
-            pthread_mutex_unlock(&main->alive_lock);
         }
         if (main->all_alive == 1 && message == 5)
             printf("%ld %d died\n", time, id);

@@ -31,10 +31,10 @@ $(NAME): $(OBJ)
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
 
-fsanitize: FLAGS += -fsanitize=thread
+fsanitize: CFLAGS += -fsanitize=thread
 fsanitize: fclean ${NAME}
 
-debug: FLAGS += -ggdb3
+debug: CFLAGS += -ggdb3
 debug: fclean ${NAME}
 
 val: re debug
