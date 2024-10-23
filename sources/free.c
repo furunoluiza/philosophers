@@ -35,6 +35,7 @@ void  free_philos(t_philo *philos)
     while (i < philos->philos)
     {
         pthread_mutex_destroy(&philos[i].live_lock);
+        pthread_mutex_destroy(&philos[i].meals_lock);
         i++;
     }
     free(philos);

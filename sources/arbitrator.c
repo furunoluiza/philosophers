@@ -45,6 +45,25 @@ int philo_satisfied(t_philo *philo)
     pthread_mutex_unlock(&philo->main->notsatisfied_lock);
     return (1);
 }
+int num_meals(t_philo *philo)
+{
+    int i;
+    int counter;
+
+    i = 0;
+    counter = 0;
+    if (philo->num_eat == -1)
+        return (0);
+    while (i < philo->philos)
+    {
+        pthread_mutex_lock(&philo[i].meals_lock);
+        if (philo[i].num_eat <= philo[i].meals)
+            counter++;
+        pthread_mutex_unlock(&philo[i].meals_lock);
+        i++;
+    }
+    return (counter == philo->philos);
+}
 
 void    *arbitrator_routine(void *arg)
 {
@@ -67,7 +86,7 @@ void    *arbitrator_routine(void *arg)
         while(i < philos->philos)
         {
             pthread_mutex_lock(&philos[i].live_lock);
-            if (philos[i].live_tv <= get_time())
+            if (philos[i].live_tv <= get_time() || num_meals(philos) == 1)
             {
                 pthread_mutex_unlock(&philos[i].live_lock);
                 pthread_mutex_lock(&philos->main->alive_lock);

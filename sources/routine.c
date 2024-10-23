@@ -54,7 +54,9 @@ int ft_eat(t_philo *philo)
 {
     if (!take_fork(philo))
     {
+        pthread_mutex_lock(&philo->meals_lock);
         philo->meals += 1;
+        pthread_mutex_unlock(&philo->meals_lock);
         my_sleep(philo->eat);
         return_fork(philo);
         return (0);
@@ -62,6 +64,17 @@ int ft_eat(t_philo *philo)
     return (1);
 }
 
+int can_eat(t_philo *philo)
+{
+    int flag;
+    pthread_mutex_lock(&philo->meals_lock);
+    if (philo->num_eat == -1 || philo->num_eat > philo->meals)
+        flag = 1;
+    else
+        flag = 0;
+    pthread_mutex_unlock(&philo->meals_lock);
+    return (flag);
+}
 
 void    *routine(void *arg)
 {
@@ -73,8 +86,7 @@ void    *routine(void *arg)
     pthread_mutex_unlock(&philo->live_lock);
     if (philo->id % 2 != 0)
         usleep(200);
-    while ((philo->num_eat == -1 || philo->num_eat > philo->meals) && 
-            philo_alive(philo) == 1 && philo_satisfied(philo) == 1)
+    while (can_eat(philo) && philo_alive(philo) == 1 && philo_satisfied(philo) == 1)
     {
         if (ft_eat(philo) == 0)
         {

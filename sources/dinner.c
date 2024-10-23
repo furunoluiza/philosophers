@@ -71,6 +71,7 @@ t_philo *build_philos(t_dinner *dinner, t_fork *forks)
         new_philo[i].left = &forks[(i + 1) % dinner->philos];
         new_philo[i].main = NULL;
         pthread_mutex_init(&new_philo[i].live_lock, NULL);
+        pthread_mutex_init(&new_philo[i].meals_lock, NULL);
         i++;
     }
     return(new_philo);
