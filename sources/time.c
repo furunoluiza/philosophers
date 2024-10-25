@@ -6,26 +6,26 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 13:22:40 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/08 14:42:20 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:39:33 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long    get_time(void)
+long	get_time(void)
 {
-    struct timeval   tv;
+	struct timeval	tv;
 
-    if (gettimeofday(&tv, NULL))
-        return(0);
-    return((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	if (gettimeofday(&tv, NULL))
+		return (0);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void    my_sleep(long time)
+void	my_sleep(long time)
 {
-    long    start_time;
+	long	start_time;
 
-    start_time  = get_time();
-    while((get_time() - start_time) < time)
-        usleep(200);
+	start_time = get_time();
+	while ((get_time() - start_time) < time)
+		usleep(200);
 }

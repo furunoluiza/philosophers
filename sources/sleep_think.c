@@ -6,19 +6,19 @@
 /*   By: lfuruno- <lfuruno-@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 12:11:43 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/10 12:11:43 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/25 16:35:22 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void ft_sleep(t_philo *philo)
+void	ft_sleep(t_philo *philo)
 {
-    print_message(philo, philo->id, 3, philo->main);
-    my_sleep(philo->sleep);
+	print_message(philo, philo->id, 3, philo->main);
+	my_sleep(philo->sleep);
 }
 
-void ft_think(t_philo *philo)
+void	ft_think(t_philo *philo)
 {
-    print_message(philo, philo->id, 4, philo->main);
+	print_message(philo, philo->id, 4, philo->main);
 }
