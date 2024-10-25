@@ -58,6 +58,5 @@ int create_threads(t_main *main)
         i++;
     }
     join_arbitrator(main);
-    free(threads);
-    return (1);
+    return (free(threads), 1);
 }

@@ -32,6 +32,8 @@ int    take_fork(t_philo *philo)
     int took;
 
     took = 0;
+    if (philo->philos == 1)
+        return (1);
     while (took != 2)
     {
         if (took == 0)
