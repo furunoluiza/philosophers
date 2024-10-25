@@ -6,7 +6,7 @@
 /*   By: lfuruno- <lfuruno-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:51:09 by lfuruno-          #+#    #+#             */
-/*   Updated: 2024/10/25 16:57:24 by lfuruno-         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:13:32 by lfuruno-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdint.h>
+
+typedef struct t_main	t_main;
 
 typedef struct s_fork
 {
