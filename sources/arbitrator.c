@@ -19,11 +19,14 @@ int	num_meals(t_philo *philo)
 
 	i = 0;
 	counter = 0;
-	if (philo->num_eat == -1)
-		return (0);
 	while (i < philo->philos)
 	{
 		pthread_mutex_lock(&philo[i].meals_lock);
+		if (philo->num_eat == -1)
+		{
+			pthread_mutex_unlock(&philo[i].meals_lock);
+			return (0);
+		}
 		if (philo[i].num_eat <= philo[i].meals)
 			counter++;
 		pthread_mutex_unlock(&philo[i].meals_lock);
