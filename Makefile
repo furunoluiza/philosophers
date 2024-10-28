@@ -27,7 +27,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "-----------------------Compilation of $(NAME)----------------------------------------"
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -lreadline
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 	@echo "-------------------------------------------------------------------------------------"
 	@echo "$(blink)$(G) ✅ $(NAME) successfully compiled $(Reset)"
 
