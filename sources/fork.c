@@ -18,6 +18,7 @@ int	take_right_fork(t_philo *philo)
 	if (philo->right->flag == 0)
 	{
 		philo->right->flag = 1;
+		print_message(philo, philo->id, 1, philo->main);
 		pthread_mutex_unlock(&philo->right->lock);
 		return (1);
 	}

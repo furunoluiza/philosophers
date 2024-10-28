@@ -30,9 +30,7 @@ int	take_fork(t_philo *philo)
 	int	took;
 
 	took = 0;
-	if (philo->philos == 1)
-		return (1);
-	while (took != 2)
+	while (took != 2 && philo->live_tv >= get_time())
 	{
 		if (took == 0)
 			took = take_right_fork(philo);
@@ -85,7 +83,7 @@ void	*routine(void *arg)
 	pthread_mutex_lock(&philo->live_lock);
 	philo->live_tv = philo->main->start_time + philo->die;
 	pthread_mutex_unlock(&philo->live_lock);
-	if (philo->id % 2 != 0)
+	if (philo->id % 2 == 0)
 		my_sleep(200);
 	while (can_eat(philo) && philo_alive(philo) == 1
 		&& philo_satisfied(philo) == 1)
